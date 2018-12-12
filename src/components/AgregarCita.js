@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import uuid from 'uuid';
+import PropTypes from 'prop-types';
 
 class AgregarCita extends Component{
 
@@ -11,9 +12,12 @@ class AgregarCita extends Component{
     horaMascotaRef = React.createRef();
     sintomaMascotaRef = React.createRef();
 
+    //Los hijos tambien pueden tener state, en este caso error para el manejo de exepciones
     state = { 
         error:false
     }
+
+    //Funcion en el componente AgregarCita
 
     crearNuevaCita = e => {
         e.preventDefault();
@@ -46,10 +50,10 @@ class AgregarCita extends Component{
             //Se envia el objeto hacia el padre para actualizar el state
             this.props.crearCita(nuevaCita);
     
-            //Reiniciar el formulario
+            //Reiniciar el formulario, esto es para limpiar los campos despues de mandar la nueva cita
             e.currentTarget.reset();
 
-            //Eliminar el error
+            //Eliminar el error (si hubo o no error aun asi lo limpio)
             this.setState({
                 error: false
             })
@@ -66,7 +70,7 @@ class AgregarCita extends Component{
         return(
             <div className="card mt-5">
                 <div className="card-body"> 
-                    <h2 className="card-title text-cener mb-5">Agrega las citas aquì</h2>
+                    <h2 className="card-title text-center mb-5">Agrega las citas aquì</h2>
                     <form onSubmit={this.crearNuevaCita}>
                         <div className="form-group row">
                             <label className="col-sm-4 col-lg-2 col-form-label">Nombre Mascota</label>
@@ -111,6 +115,12 @@ class AgregarCita extends Component{
             </div>
         )
     }
+}
+
+//Para documentar mi aplicacion se utiliza PropTypes
+
+AgregarCita.propTypes = {
+    crearCita : PropTypes.func.isRequired
 }
 
 export default AgregarCita;
